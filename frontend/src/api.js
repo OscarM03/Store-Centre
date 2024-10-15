@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000/', // Adjust to your API base URL
+  baseURL: 'https://xiaomistore-backend.onrender.com/', // Adjust to your API base URL
 });
 
 // Define protected routes
