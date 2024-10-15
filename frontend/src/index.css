@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(14, 12, 21); /* Add transparency with rgba */
+}
+input:-webkit-autofill {
+    background-color: transparent !important; /* or any other background you want */
+    color: inherit; /* Optional: Ensure the text color remains the same */
+}
+
+.div-section {
+    background-color: rgb(23, 21, 31);
+    color: white;
+    border-radius: 10px;
+}
+
+.custom-bg {
+    box-shadow: 0px 0px 10px 10px rgba(92, 175, 255, .7),
+              0px 0px 10px 20px rgba(188, 53, 254, .7);
+}
+
+.container {
+    max-width: 1400px;  /* Set the maximum width of the container */
+    margin: 0 auto;     /* Center the container horizontally */    /* Add padding to ensure content doesn't touch the screen edges */
+    font-family: Sora, sans-serif;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
