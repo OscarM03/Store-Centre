@@ -38,7 +38,6 @@ console.log(productList);
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching products</p>;
 
   return (
@@ -52,18 +51,22 @@ console.log(productList);
             className="flex pt-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
             ref={scrollContainerRef}
           >
-            {productList.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                current_price={product.current_price}
-                original_price={product.original_price}
-                category={product.category.name}
-                discount={product.discount}
-              />
-            ))}
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              productList.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  image={product.image}
+                  name={product.name}
+                  current_price={product.current_price}
+                  original_price={product.original_price}
+                  category={product.category.name}
+                  discount={product.discount}
+                />
+              ))
+            )}
           </div>
           <div
             onClick={scrollLeft}
