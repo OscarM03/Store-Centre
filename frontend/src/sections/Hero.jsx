@@ -82,7 +82,6 @@ const Hero = () => {
         return () => clearInterval(interval);
     }, [heroProductList]);
 
-    if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error fetching products</p>
 
     const currentProduct = heroProductList[currrentPropductIndex];
@@ -104,22 +103,31 @@ const Hero = () => {
                         ))}
                     </div>
                 </div>
-                {currentProduct && (
-                    <div key={currentProduct.id} className="w-[70%] flex justify-center items-center max-lg:w-full max-md:flex-col z-10">
-                        <div className="w-[40%] max-md:text-center max-md:w-full">
-                            <a href={`/product-details/${currentProduct.id}`}><h1 className="text-4xl text-xiaomi-color pb-1 font-bold">{currentProduct.name}</h1></a>
-                            <h1 className="text-lg pb-1">{currentProduct.slogan}</h1>
-                            <h1 className="text-gray-400 pb-1">{currentProduct.feature_1}</h1>
-                            <h1 className="text-gray-400">{currentProduct.feature_2}</h1>
-                            <button className="border py-1 px-2 mt-6 bg-dark-bg text-xiaomi-color border-gray-400" onClick={() => handleAddToCart(currentProduct.id)}>
-                                Order Now
-                            </button>
+                {isLoading ? (
+                    <p>Loading..</p>
+                ) : (
+                    currentProduct && (
+                        <div key={currentProduct.id} className="w-[70%] flex justify-center items-center max-lg:w-full max-md:flex-col z-10">
+                            <div className="w-[40%] max-md:text-center max-md:w-full">
+                                <a href={`/product-details/${currentProduct.id}`}>
+                                    <h1 className="text-4xl text-xiaomi-color pb-1 font-bold">{currentProduct.name}</h1>
+                                </a>
+                                <h1 className="text-lg pb-1">{currentProduct.slogan}</h1>
+                                <h1 className="text-gray-400 pb-1">{currentProduct.feature_1}</h1>
+                                <h1 className="text-gray-400">{currentProduct.feature_2}</h1>
+                                <button className="border py-1 px-2 mt-6 bg-dark-bg text-xiaomi-color border-gray-400" onClick={() => handleAddToCart(currentProduct.id)}>
+                                    Order Now
+                                </button>
+                            </div>
+                            <div className="flex justify-center items-center">
+                                <a href={`/product-details/${currentProduct.id}`}>
+                                    <img src={currentProduct.image} alt="" width={400} className="max-lg:w-[370px]" />
+                                </a>
+                            </div>
                         </div>
-                        <div className="flex justify-center items-center">
-                            <a href={`/product-details/${currentProduct.id}`}><img src={currentProduct.image} alt="" width={400} className="max-lg:w-[370px]" /></a>
-                        </div>
-                    </div>
+                    )
                 )}
+                
                 {isCategoryOpen && (
                     <div className="absolute mt-8 bg-dark-bg z-20">
                     {filters.map((filter, index) => (
