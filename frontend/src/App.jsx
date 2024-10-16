@@ -46,7 +46,6 @@ function App() {
       <Header />
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/store" element={<Store />} />
         <Route exact path="/product-details/:id" element={<ProductDetails />} />
         <Route exact path="/billing" element={<BillingForm />} />
         <Route
