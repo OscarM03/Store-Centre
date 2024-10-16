@@ -45,7 +45,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         if (product && product.image) {
-            setSelectedImage(`{product.image}`);
+            setSelectedImage(product.image);
         }
     }, [product]);
 
@@ -81,19 +81,19 @@ const ProductDetails = () => {
     </h1>
                 </div>
                 <div className="flex gap-4 z-10">
-                    <div className={`border-2 rounded-lg ${selectedImage === `{product.thumbnail_1}` ? 'border-xiaomi-color' : 'border-gray-400'}`}>
+                    <div className={`border-2 rounded-lg ${selectedImage === product.thumbnail_1 ? 'border-xiaomi-color' : 'border-gray-400'}`}>
                     <img src={product.thumbnail_1} alt={product.name}
                     width={150}
-                    onClick={() => setSelectedImage(`{product.thumbnail_1}`)}
+                    onClick={() => setSelectedImage(product.thumbnail_1)}
                     />
                     </div>
-                    <div className={`border-2 rounded-lg ${selectedImage === `{product.thumbnail_2}` ? 'border-xiaomi-color' : 'border-gray-400'}`}><img src={product.thumbnail_2} alt={product.name}
+                    <div className={`border-2 rounded-lg ${selectedImage === product.thumbnail_2 ? 'border-xiaomi-color' : 'border-gray-400'}`}><img src={product.thumbnail_2} alt={product.name}
                     width={150}
-                    onClick={() => setSelectedImage(`{product.thumbnail_2}`)}
+                    onClick={() => setSelectedImage(product.thumbnail_2)}
                     /></div>
-                    <div className={`border-2 rounded-lg ${selectedImage === `{product.thumbnail_3}` ? 'border-xiaomi-color' : 'border-gray-400'}`}><img src={product.thumbnail_3} alt={product.name}
+                    <div className={`border-2 rounded-lg ${selectedImage === product.thumbnail_3 ? 'border-xiaomi-color' : 'border-gray-400'}`}><img src={product.thumbnail_3} alt={product.name}
                     width={150}
-                    onClick={() => setSelectedImage(`{product.thumbnail_3}`)}
+                    onClick={() => setSelectedImage(product.thumbnail_3)}
                     /></div>
                 </div>
                 <div className="max-lg:flex gap-10 max-sm:flex-col max-sm:gap-0">
