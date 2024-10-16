@@ -6,7 +6,6 @@ import Header from "./sections/Header";
 import Hero from "./sections/Hero";
 import LatestProduct from "./sections/LatestProduct";
 import Products from "./sections/Products";
-import Store from "./sections/Store";
 import Offer from "./components/Offer";
 import ProductDetails from "./sections/ProductDetails";
 import Phones from "./sections/Phones";
