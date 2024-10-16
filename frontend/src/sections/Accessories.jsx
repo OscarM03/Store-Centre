@@ -36,7 +36,6 @@ const Accessories = () => {
   //   }
   // };
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching accessories</p>;
   
   return (
@@ -48,19 +47,22 @@ const Accessories = () => {
                     {/* <h1 className="text-sm text-gray-400 font-bold border-r-2 border-l-2 px-2 border-xiaomi-color">See All</h1> */}
                 </div>
                 <div className="grid grid-cols-6 gap-6 mt-2 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2">
-                    {accessoriesList.map((product) => (
-                        <ProductCard 
-                        key={product.id}
-                        id = {product.id}
-                        image=
-                        {product.image}
-                        name={product.name}
-                        current_price={product.current_price}
-                        original_price={product.original_price}
-                        category={product.category.name}
-                        discount={product.discount}
-                        />
-                    ))}
+                {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            accessoriesList.map((product) => (
+              <ProductCard 
+                key={product.id}
+                id={product.id}
+                image={product.image}
+                name={product.name}
+                current_price={product.current_price}
+                original_price={product.original_price}
+                category={product.category.name}
+                discount={product.discount}
+              />
+            ))
+          )}
                 </div>
             </div>
         </section>

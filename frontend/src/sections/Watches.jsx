@@ -9,12 +9,16 @@ const Watches = () => {
   const scrollContainerRef = useRef(null);
 
   const fetchWatches = async () => {
-    const response = await api.get('api/v1/watches/')
-    return response.data
-  }
+    const response = await api.get("api/v1/watches/");
+    return response.data;
+  };
 
-  const {data: watchesList = [], isLoading, error} = useQuery({
-    queryKey: ['watchesList'],
+  const {
+    data: watchesList = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["watchesList"],
     queryFn: fetchWatches,
   });
 
@@ -36,32 +40,33 @@ const Watches = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching watches</p>;
-  
+
   return (
     <section className="container">
       <div className="mx-20 relative mt-10 max-md:mx-10 max-sm:mx-3">
-        <h1 className="text-xiaomi-color font-bold text-2xl">
-          Watches
-        </h1>
+        <h1 className="text-xiaomi-color font-bold text-2xl">Watches</h1>
         <div className="max-md:mx-10 max-sm:mx-3">
           <div
             className="flex pt-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
             ref={scrollContainerRef}
           >
-            {watchesList.map((product) => (
-              <ProductCard
-              key={product.id}
-              id={product.id}
-              image={product.image}
-              name={product.name}
-              current_price={product.current_price}
-              original_price={product.original_price}
-              category={product.category.name}
-              discount={product.discount}
-              />
-            ))}
+            {isLoading ? ( // Check if loading
+              <p>Loading...</p> // Display loading message while items are being loaded
+            ) : (
+              watchesList.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  image={product.image}
+                  name={product.name}
+                  current_price={product.current_price}
+                  original_price={product.original_price}
+                  category={product.category.name}
+                  discount={product.discount}
+                />
+              ))
+            )}
           </div>
           <div
             onClick={scrollLeft}

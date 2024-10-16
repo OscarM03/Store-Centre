@@ -2,29 +2,23 @@
 import { useState, useEffect } from "react";
 import api from "../api";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../components/ProductCard";
 
 const All = () => {
     const [columns, setColumns] = useState(5);
-    const [productList, setProductList] = useState([]);
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('q') || '';
 
-    useEffect(() => {
-        const fetchProductList = async () => {
-            try {
-                // Fetch products based on the search query
-                const response = await api.get('api/v1/products/', { params: { q: query } });
-                const data = response.data;
-                console.log('API Response:', data);
-                setProductList(data);
-            } catch (error) {
-                console.error('Error fetching product list', error);
-            }
+    const fetchProductsList = async () => {
+            const response = await api.get('api/v1/products/', { params: { q: query } });
+            return response.data;
         };
 
-        fetchProductList();
-    }, [query]);
+        const { data: productList = [], isLoading, error } = useQuery({
+            queryKey: ['productList'],
+            queryFn: fetchProductsList,
+        });
 
     useEffect(() => {
         const handleResize = () => {
@@ -68,22 +62,29 @@ const All = () => {
         }
     };
 
+    if (error) return <p>Error fetching products</p>;
+
+
     return (
         <section className="container">
-            <div className={`grid ${getGridColumnsClass()} mx-10 max-md:mx-8 max-sm:mx-3 gap-y-8 mt-24`}>
-                {productList.map((product) => (
-                    <ProductCard
-                    key={product.id}
-                    image={product.image}
-                    name={product.name}
-                    current_price={product.current_price}
-                    original_price={product.original_price}
-                    category={product.category.name}
-                    discount={product.discount}
-                        className="cursor-pointer"
-                    />
-                ))}
-            </div>
+            {isLoading ? ( // Add loading state check
+        <p>Loading...</p>
+      ) : (
+        <div className={`grid ${getGridColumnsClass()} mx-10 max-md:mx-8 max-sm:mx-3 gap-y-8 mt-24`}>
+          {productList.map((product) => (
+            <ProductCard
+              key={product.id}
+              image={product.image}
+              name={product.name}
+              current_price={product.current_price}
+              original_price={product.original_price}
+              category={product.category.name}
+              discount={product.discount}
+              className="cursor-pointer"
+            />
+          ))}
+        </div>
+      )}
         </section>
     );
 };

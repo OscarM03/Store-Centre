@@ -99,7 +99,6 @@ const MyCart = () => {
         return parseFloat(amount).toLocaleString('en-KE', { style: 'currency', currency: 'KES' });
     };
 
-    if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error fetching the cart items</p>;
 
     return (
@@ -111,26 +110,31 @@ const MyCart = () => {
                             <h1 className="text-xl text-xiaomi-color">My Cart</h1>
                             <p className="text-gray-400 ">{cartItems.length} Products</p>
                         </div>
-                        {cartItems.map((item) => (
-                            <div key={item.product.id} className="flex justify-between items-center border border-gray-400 rounded-lg p-3 mt-4 relative">
-                                <div>
-                                    <img src={item.product.image} alt="" width={100} />
-                                    <h1 className="text-gray-400 font-semi-bold">{item.product.name}</h1>
+                        {isLoading ? ( // Check if loading
+                            <p>Loading...</p> // Display loading message while items are being loaded
+                        ) : (
+                            cartItems.map((item) => (
+                                <div key={item.product.id} className="flex justify-between items-center border border-gray-400 rounded-lg p-3 mt-4 relative">
+                                    <div>
+                                        <img src={item.product.image} alt="" width={100} />
+                                        <h1 className="text-gray-400 font-semi-bold">{item.product.name}</h1>
+                                    </div>
+                                    <QuantitySelector 
+                                        quantity={item.quantity} 
+                                        onQuantityChange={(newQuantity) => handleQuantityChange(item.product.id, newQuantity)} 
+                                    />
+                                    <div className="text-center">
+                                        <h1 className="text-xiaomi-color font-bold">{formatCurrency(item.product.current_price)}</h1>
+                                        <h1 className="text-gray-400 font-bold text-sm">{item.product.stock}</h1>
+                                        <h2 className="text-gray-400 font-semibold">Total: {formatCurrency(item.product.current_price * item.quantity)}</h2>
+                                    </div>
+                                    <div className="absolute top-2 right-2" onClick={() => handleDelete(item.id)}>
+                                        <img src={closeIcon} alt="close icon" width={10} />
+                                    </div>
                                 </div>
-                                <QuantitySelector 
-                                    quantity={item.quantity} 
-                                    onQuantityChange={(newQuantity) => handleQuantityChange(item.product.id, newQuantity)} 
-                                />
-                                <div className="text-center">
-                                    <h1 className="text-xiaomi-color font-bold">{formatCurrency(item.product.current_price)}</h1>
-                                    <h1 className="text-gray-400 font-bold text-sm">{item.product.stock}</h1>
-                                    <h2 className="text-gray-400 font-semibold">Total: {formatCurrency(item.product.current_price * item.quantity)}</h2>
-                                </div>
-                                <div className="absolute top-2 right-2 " onClick={() => handleDelete(item.id)}>
-                                    <img src={closeIcon} alt="close icon" width={10} />
-                                </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
+
                     </div>
                     <div className="w-[40vw] max-lg:w-full mt-[45px rounded-lg">
                         <div>
