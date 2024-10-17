@@ -129,11 +129,11 @@ const ProductDetails = () => {
           </div>
         </div>
         <div className="max-lg:flex gap-10 max-sm:flex-col max-sm:gap-0">
-          <div className="lg:absolute left-0 bottom-[240px] border-2 border-xiaomi-color rounded-lg max-lg:mt-16 z-20">
+          <div className="lg:absolute left-0 bottom-[240px] border-2 border-xiaomi-color rounded-lg max-lg:mt-16 z-20 max-w-[400px]">
             <h1 className="text-xiaomi-color font-bold text-lg text-center pt-1">
               {product.name} features:
             </h1>
-            <ul className=" text-gray-400 font-semibold px-6 py-2 text-center lg:text-start">
+            <ul className=" text-gray-400 font-semibold px-6 py-2 text-center">
               {features &&
                 Object.entries(features).map(([key, value]) => (
                   <li key={key} className="pb-1">
