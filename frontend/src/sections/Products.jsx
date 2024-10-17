@@ -19,6 +19,8 @@ const { data: productList = [], isLoading, error } = useQuery({
     queryFn: fetchProducts,
 });
 
+console.log(productList);
+
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
