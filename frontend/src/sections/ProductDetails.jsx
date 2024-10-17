@@ -133,7 +133,7 @@ const ProductDetails = () => {
             <h1 className="text-xiaomi-color font-bold text-lg text-center pt-1">
               {product.name} features:
             </h1>
-            <ul className=" text-gray-400 font-semibold px-6 py-2 text-center">
+            <ul className=" text-gray-400 font-semibold px-6 py-2 text-center lg:text-start">
               {features &&
                 Object.entries(features).map(([key, value]) => (
                   <li key={key} className="pb-1">
