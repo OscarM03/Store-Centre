@@ -179,7 +179,11 @@ const ProductDetails = () => {
         <h1 className="text-2xl text-xiaomi-color mb-1 text-center">
           More Info
         </h1>
-        <p className="text-gray-400 text-center">{product.additional_info}</p>
+        {product.additional_info.split("\n").map((paragraph, index) => (
+          <p key={index} className="text-gray-400 text-center mb-4">
+            {paragraph}
+          </p>
+        ))}
       </div>
     </section>
   );
