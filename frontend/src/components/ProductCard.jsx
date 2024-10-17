@@ -62,13 +62,11 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
                     <h1>{isAdding ? 'Adding...' : 'Add to Cart'}</h1>
                 </div>
             </div>
-                <div className="absolute right-1 -top-2"> 
                 {discount && discount > 0 && (
                     <div className="absolute right-1 -top-2"> 
                         <p className="text-xiaomi-color text-sm font-bold">-{discount}%</p>
                     </div>
                 )}
-            </div>
         </div>
     );
 };
