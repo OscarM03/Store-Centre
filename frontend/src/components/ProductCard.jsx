@@ -39,7 +39,7 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
     };
 
     return (
-        <div className="flex flex-shrink-0 flex-col items-center border-gray-400 relative group transition-opacity ease-in-out duration-1000">
+        <div className="flex flex-shrink-0 flex-col items-center border-gray-400 relative group transition-opacity ease-in-out duration-1000 w-[200px]">
             <a href={`/product-details/${id}`}>
                 <img src={image} alt={name} width={180} className=""/>
             </a>
