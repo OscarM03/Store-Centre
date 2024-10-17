@@ -85,49 +85,56 @@ const ProductDetails = () => {
           </h1>
         </div>
         <div className="flex gap-4 z-10">
-          <div
-            className={`border-2 rounded-lg ${
-              selectedImage === product.thumbnail_1
-                ? "border-xiaomi-color"
-                : "border-gray-400"
-            }`}
-          >
-            <img
-              src={product.thumbnail_1}
-              alt={product.name}
-              width={150}
-              onClick={() => setSelectedImage(product.thumbnail_1)}
-            />
-          </div>
-          <div
-            className={`border-2 rounded-lg ${
-              selectedImage === product.thumbnail_2
-                ? "border-xiaomi-color"
-                : "border-gray-400"
-            }`}
-          >
-            <img
-              src={product.thumbnail_2}
-              alt={product.name}
-              width={150}
-              onClick={() => setSelectedImage(product.thumbnail_2)}
-            />
-          </div>
-          <div
-            className={`border-2 rounded-lg ${
-              selectedImage === product.thumbnail_3
-                ? "border-xiaomi-color"
-                : "border-gray-400"
-            }`}
-          >
-            <img
-              src={product.thumbnail_3}
-              alt={product.name}
-              width={150}
-              onClick={() => setSelectedImage(product.thumbnail_3)}
-            />
-          </div>
+          {product.thumbnail_1 && (
+            <div
+              className={`border-2 rounded-lg ${
+                selectedImage === product.thumbnail_1
+                  ? "border-xiaomi-color"
+                  : "border-gray-400"
+              }`}
+            >
+              <img
+                src={product.thumbnail_1}
+                alt={product.name}
+                width={150}
+                onClick={() => setSelectedImage(product.thumbnail_1)}
+              />
+            </div>
+          )}
+          {product.thumbnail_2 && (
+            <div
+              className={`border-2 rounded-lg ${
+                selectedImage === product.thumbnail_2
+                  ? "border-xiaomi-color"
+                  : "border-gray-400"
+              }`}
+            >
+              <img
+                src={product.thumbnail_2}
+                alt={product.name}
+                width={150}
+                onClick={() => setSelectedImage(product.thumbnail_2)}
+              />
+            </div>
+          )}
+          {product.thumbnail_3 && (
+            <div
+              className={`border-2 rounded-lg ${
+                selectedImage === product.thumbnail_3
+                  ? "border-xiaomi-color"
+                  : "border-gray-400"
+              }`}
+            >
+              <img
+                src={product.thumbnail_3}
+                alt={product.name}
+                width={150}
+                onClick={() => setSelectedImage(product.thumbnail_3)}
+              />
+            </div>
+          )}
         </div>
+
         <div className="max-xl:flex gap-10 max-sm:flex-col max-sm:gap-0">
           <div className="xl:absolute left-0 bottom-[240px] border-2 border-xiaomi-color rounded-lg max-xl:mt-16 z-20 max-w-[400px]">
             <h1 className="text-xiaomi-color font-bold text-lg text-center pt-1">
