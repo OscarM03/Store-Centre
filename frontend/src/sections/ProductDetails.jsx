@@ -128,8 +128,8 @@ const ProductDetails = () => {
             />
           </div>
         </div>
-        <div className="max-lg:flex gap-10 max-sm:flex-col max-sm:gap-0">
-          <div className="lg:absolute left-0 bottom-[240px] border-2 border-xiaomi-color rounded-lg max-lg:mt-16 z-20 max-w-[400px]">
+        <div className="max-xl:flex gap-10 max-sm:flex-col max-sm:gap-0">
+          <div className="xl:absolute left-0 bottom-[240px] border-2 border-xiaomi-color rounded-lg max-lg:mt-16 z-20 max-w-[400px]">
             <h1 className="text-xiaomi-color font-bold text-lg text-center pt-1">
               {product.name} features:
             </h1>
@@ -144,7 +144,7 @@ const ProductDetails = () => {
             </ul>
           </div>
 
-          <div className="lg:absolute right-16 bottom-[240px] border-2 p-4 rounded-lg border-xiaomi-color max-lg:mt-16 z-20">
+          <div className="xl:absolute right-16 bottom-[240px] border-2 p-4 rounded-lg border-xiaomi-color max-lg:mt-16 z-20">
             <h1 className="text-xiaomi-color font-bold text-center pb-2 text-lg">
               {product.name}
             </h1>
