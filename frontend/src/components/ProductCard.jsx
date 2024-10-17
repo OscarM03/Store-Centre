@@ -47,7 +47,11 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
             <a href={`/product-details/${id}`}><h1 className="text-white pt-2 hover:text-xiaomi-color">{name}</h1></a>
             <h1 className="text-xiaomi-color font-semibold pt-1 hover:text-white">
                 Ksh {parseFloat(current_price).toLocaleString()}
-                <span className="line-through text-gray-400 text-xs">Ksh {parseFloat(original_price).toLocaleString()}</span>
+                {original_price && original_price > current_price && (
+                    <span className="line-through text-gray-400 text-xs ml-2">
+                        Ksh {parseFloat(original_price).toLocaleString()}
+                    </span>
+                )}
             </h1>
             <div>
                 <div 
@@ -58,8 +62,12 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
                     <h1>{isAdding ? 'Adding...' : 'Add to Cart'}</h1>
                 </div>
             </div>
-            <div className="absolute right-1 -top-2"> 
-                <p className="text-xiaomi-color text-sm font-bold">-{discount}%</p>
+                <div className="absolute right-1 -top-2"> 
+                {discount && discount > 0 && (
+                    <div className="absolute right-1 -top-2"> 
+                        <p className="text-xiaomi-color text-sm font-bold">-{discount}%</p>
+                    </div>
+                )}
             </div>
         </div>
     );
