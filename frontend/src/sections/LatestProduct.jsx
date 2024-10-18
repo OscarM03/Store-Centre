@@ -43,7 +43,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
           </h1>
         </div>
 
-        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[72%] top-28 max-md:left-[67%]  max-sm:top-[90px] max-custom-380:hidden">
+        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[72%] top-28 max-md:left-[67%]  max-sm:top-[90px] max-sm:left-[57%] max-custom-380:hidden">
           <div className="bg-icon-color2 w-8 h-8 rounded-lg flex justify-center items-center max-md:w-6 max-md:h-6">
             <img
               src={Storage}
@@ -71,7 +71,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
           </h1>
         </div>
 
-        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[72%] top-[336px] max-md:left-[67%]  max-sm:top-[270px] max-custom-380:hidden">
+        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[72%] top-[336px] max-md:left-[67%]  max-sm:left-[57%] max-sm:top-[270px] max-custom-380:hidden">
           <div className="bg-icon-color4 w-8 h-8 rounded-lg flex justify-center items-center max-md:w-6 max-md:h-6">
             <img
               src={Storage}
@@ -113,7 +113,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
           </h1>
         </div>
 
-        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[10%] top-28 max-md:left-[26%] max-sm:left-[16%] max-sm:top-[90px] max-custom-380:hidden">
+        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[10%] top-28 max-md:left-[26%] max-sm:left-[6%] max-sm:top-[90px] max-custom-380:hidden">
           <div className="bg-icon-color3 w-8 h-8 rounded-lg flex justify-center items-center max-md:w-6 max-md:h-6">
             <img
               src={Storage}
@@ -141,7 +141,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
           </h1>
         </div>
 
-        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[10%] top-[336px] max-md:left-[26%] max-sm:left-[16%] max-sm:top-[270px] max-custom-380:hidden ">
+        <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[10%] top-[336px] max-md:left-[26%] max-sm:left-[6%] max-sm:top-[270px] max-custom-380:hidden ">
           <div className="bg-icon-color1 w-8 h-8 rounded-lg flex justify-center items-center max-md:w-6 max-md:h-6">
             <img
               src={Storage}
