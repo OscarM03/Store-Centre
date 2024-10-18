@@ -23,7 +23,7 @@ const { data: productList = [], isLoading, error } = useQuery({
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: -200,
+        left: -180,
         behavior: "smooth",
       });
     }
@@ -32,7 +32,7 @@ const { data: productList = [], isLoading, error } = useQuery({
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
-        left: 200,
+        left: 180,
         behavior: "smooth",
       });
     }

@@ -38,21 +38,26 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
         addToCartMutation.mutate(id); // Trigger the mutation with the product id
     };
 
+    const nameLengthThreshold = 18;
+
     return (
-        <div className="flex flex-shrink-0 flex-col items-center border-gray-400 relative group transition-opacity ease-in-out duration-1000 w-[200px]">
+        <div className="flex flex-shrink-0 flex-col items-center border-gray-400 relative group transition-opacity ease-in-out duration-1000 w-[180px]">
             <a href={`/product-details/${id}`}>
                 <img src={image} alt={name} width={180} className=""/>
             </a>
-            <p className="text-gray-400 text-sm font-medium">{category}</p>
-            <a href={`/product-details/${id}`}><h1 className="text-white pt-2 hover:text-xiaomi-color">{name}</h1></a>
-            <h1 className="text-xiaomi-color font-semibold pt-1 hover:text-white">
-                Ksh {parseFloat(current_price).toLocaleString()}
-                {original_price && original_price > current_price && (
-                    <span className="line-through text-gray-400 text-xs ml-2">
-                        Ksh {parseFloat(original_price).toLocaleString()}
-                    </span>
-                )}
-            </h1>
+            <div className="text-center w-full">
+                <p className="text-gray-400 text-sm font-medium">{category}</p>
+                <a href={`/product-details/${id}`}><h1
+                    className={`text-white pt-2 hover:text-xiaomi-color w-full overflow-hidden text-ellipsis whitespace-nowrap 
+                    ${name.length >= nameLengthThreshold ? 'text-start' : 'text-center'}`}
+                >
+                    {name}
+                </h1></a>
+                <h1 className="text-xiaomi-color font-semibold pt-1 hover:text-white">
+                    Ksh {parseFloat(current_price).toLocaleString()}
+                    <span className="line-through text-gray-400 text-xs">Ksh {parseFloat(original_price).toLocaleString()}</span>
+                </h1>
+            </div>
             <div>
                 <div 
                     className={`border border-gray-400 px-2 mt-3 text-xiaomi-color text-center opacity-0 group-hover:opacity-100 hover:border-xiaomi-color hover:text-gray-400 transition-opacity ease-in-out duration-1000 cursor-pointer ${isAdding ? 'opacity-50 cursor-not-allowed' : ''}`} 
