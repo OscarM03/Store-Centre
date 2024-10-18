@@ -88,14 +88,14 @@ const Hero = () => {
 
     return (
         <section className="container">
-            <div className="div-section mt-20 flex h-[60vh] gap-16 max-md:h-[80vh] max-md:gap-4 relative max-md:mx-3">
+            <div className="div-section mt-20 flex h-[60vh] gap-16 max-md:h-[87vh] relative max-md:mx-3">
                 <div className="ml-20 w-[18%] bg-dark-bg max-lg:absolute max-md:ml-3 max-sm:w-[20%]">
                     <div className=" pb-1 flex justify-center gap-4 border-gray-400 border-b max-sm:mt-1">
                         <img src={menuIcon} alt="" width={20} className="max-xl:hidden"/>
                         <h1 className="text-xiaomi-color text-sm max-lg:hidden cursor-pointer">SHOP BY CATEGORIES</h1>
                         <h1 className="text-xiaomi-color text-sm lg:hidden max-sm:text-xs z-20 cursor-pointer" onClick={toggleCategory}>CATEGORIES</h1>
                     </div>
-                    <div className="max-lg:hidden">
+                    <div className="max-lg:hidden max-md:ml-2">
                         {filters.map((filter, index) => (
                             <div key={index} className="flex justify-center items-center py-[9px] max-xl:py-2 px-4 border-gray-400 border-b last:border-b-0">
                                 <a href={filter.href}><h1 className="hover:text-xiaomi-color">{filter.name}</h1></a>
@@ -107,7 +107,7 @@ const Hero = () => {
                     <p>Loading..</p>
                 ) : (
                     currentProduct && (
-                        <div key={currentProduct.id} className="w-[70%] flex justify-center items-center max-lg:w-full max-md:flex-col z-10">
+                        <div key={currentProduct.id} className="w-[70%] flex justify-center items-center max-lg:w-full max-md:flex-col max-md:gap-4 z-10">
                             <div className="w-[40%] max-md:text-center max-md:w-full">
                                 <a href={`/product-details/${currentProduct.id}`}>
                                     <h1 className="text-4xl text-xiaomi-color pb-1 font-bold">{currentProduct.name}</h1>
