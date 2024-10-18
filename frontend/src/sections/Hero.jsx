@@ -88,7 +88,7 @@ const Hero = () => {
 
     return (
         <section className="container">
-            <div className="div-section mt-20 flex h-[60vh] gap-16 max-md:h-[100vh] relative max-md:mx-3">
+            <div className="div-section mt-20 flex h-[650px] gap-16 max-md:h-[400px] relative max-md:mx-3">
                 <div className="ml-20 w-[18%] bg-dark-bg max-lg:absolute max-md:ml-3 max-sm:w-[20%]">
                     <div className=" pb-1 flex justify-center gap-4 border-gray-400 border-b max-sm:mt-1">
                         <img src={menuIcon} alt="" width={20} className="max-xl:hidden"/>
