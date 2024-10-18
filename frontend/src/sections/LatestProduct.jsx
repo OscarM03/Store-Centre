@@ -27,7 +27,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
           Discover our latest phone and it features
         </p>
       </div>
-      <div className="m-auto mt-6 rounded-lg flex justify-center relative">
+      <div className="m-auto mt-6 rounded-lg flex justify-center relative max-sm:mx-3">
         <a href={`/product-details/${product.id}`}><img src={product.image} alt={product.name} width={500} /></a>
         <div className="absolute flex items-center gap-2 border px-1 py-1 rounded-md bg-light-dark max-lg:px-2 max-lg:bg-opacity-70 left-[67%] top-0 max-md:left-[57%] max-custom-380:hidden">
           <div className="bg-icon-color1 w-8 h-8 rounded-lg flex justify-center items-center max-md:w-6 max-md:h-6">
