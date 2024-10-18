@@ -78,7 +78,7 @@ const Hero = () => {
             setCurrentProductIndex((prevIndex) => 
                 prevIndex === heroProductList.length - 1 ? 0 : prevIndex + 1
             );
-        }, 30000);
+        }, 20000);
         return () => clearInterval(interval);
     }, [heroProductList]);
 
