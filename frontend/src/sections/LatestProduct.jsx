@@ -19,7 +19,7 @@ const {data: latestPhones = [], isLoading, error} = useQuery ({
   if (error) return <p>Error fetching latest phone</p>;
   return (
     <section className="container bg-gradient-bg bg-center max-md:bg-cover bg-no-repeat py-10">
-      <div className="text-center mt-10">
+      <div className="text-center mt-10 max-md:mx-3">
         <h1 className="text-2xl font-bold text-white">
           Latest Phone<span className="text-xiaomi-color"> - <a href={`/product-details/${product.id}`}>{product.name}</a></span>
         </h1>
