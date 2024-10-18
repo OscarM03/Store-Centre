@@ -88,7 +88,7 @@ const Hero = () => {
 
     return (
         <section className="container">
-            <div className="div-section mt-20 flex h-[60vh] gap-16 max-md:h-[100vh] relative max-md:mx-3">
+            <div className="div-section mt-20 flex h-[60vh] gap-16 max-md:h-[90vh] relative max-md:mx-3">
                 <div className="ml-20 w-[18%] bg-dark-bg max-lg:absolute max-md:ml-3 max-sm:w-[20%]">
                     <div className=" pb-1 flex justify-center gap-4 border-gray-400 border-b max-sm:mt-1">
                         <img src={menuIcon} alt="" width={20} className="max-xl:hidden"/>
@@ -114,7 +114,12 @@ const Hero = () => {
                                 </a>
                                 <h1 className="text-lg pb-1">{currentProduct.slogan}</h1>
                                 <h1 className="text-gray-400 pb-1">{currentProduct.feature_1}</h1>
-                                <h1 className="text-gray-400">{currentProduct.feature_2}</h1>
+                                <h1 className="text-xiaomi-color font-semibold pt-1 hover:text-white">
+                                    Ksh {parseFloat(currentProduct.current_price).toLocaleString()}
+                                    {currentProduct.original_price && currentProduct.original_price > 0 && (
+                                        <span className="line-through text-gray-400 text-xs">Ksh {parseFloat(currentProduct.original_price).toLocaleString()}</span>
+                                    )}
+                                </h1>
                                 <button className="border py-1 px-2 mt-6 bg-dark-bg text-xiaomi-color border-gray-400" onClick={() => handleAddToCart(currentProduct.id)}>
                                     Order Now
                                 </button>
