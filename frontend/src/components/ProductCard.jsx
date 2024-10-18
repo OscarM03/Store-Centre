@@ -55,7 +55,9 @@ const ProductCard = ({ image, name, current_price, original_price, category, dis
                 </h1></a>
                 <h1 className="text-xiaomi-color font-semibold pt-1 hover:text-white">
                     Ksh {parseFloat(current_price).toLocaleString()}
-                    <span className="line-through text-gray-400 text-xs">Ksh {parseFloat(original_price).toLocaleString()}</span>
+                    {original_price && original_price > 0 && (
+                        <span className="line-through text-gray-400 text-xs">Ksh {parseFloat(original_price).toLocaleString()}</span>
+                    )}
                 </h1>
             </div>
             <div>
