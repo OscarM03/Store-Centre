@@ -126,14 +126,22 @@ const MyCart = () => {
                                         <img src={item.image} alt="" width={100} />
                                         <h1 className="text-gray-400 font-semi-bold">{item.name}</h1>
                                     </div>
-                                    <QuantitySelector 
-                                        quantity={item.quantity} 
-                                        onQuantityChange={(newQuantity) => handleQuantityChange(item.id, newQuantity)} 
-                                    />
+                                    <div className="max-sm:hidden">
+                                        <QuantitySelector 
+                                            quantity={item.quantity} 
+                                            onQuantityChange={(newQuantity) => handleQuantityChange(item.id, newQuantity)} 
+                                        />
+                                    </div>
                                     <div className="text-center">
                                         <h1 className="text-xiaomi-color font-bold">{formatCurrency(item.current_price)}</h1>
                                         <h1 className="text-gray-400 font-bold text-sm">{item.stock}</h1>
                                         <h2 className="text-gray-400 font-semibold">Total: {formatCurrency(item.current_price * item.quantity)}</h2>
+                                        <div className="mt-2 sm:hidden">
+                                            <QuantitySelector 
+                                                quantity={item.quantity} 
+                                                onQuantityChange={(newQuantity) => handleQuantityChange(item.id, newQuantity)} 
+                                            />
+                                        </div>
                                     </div>
                                     <div className="absolute top-2 right-2" onClick={() => handleDelete(item.id)}>
                                         <img src={closeIcon} alt="close icon" width={10} />
