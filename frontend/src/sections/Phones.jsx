@@ -30,7 +30,7 @@ const Phones = () => {
       <div className="mx-20 max-md:mx-10 max-sm:mx-3 mt-10">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl text-xiaomi-color font-bold">Phones</h1>
-          <a href={`/all?q=${encodeURIComponent("phones")}`}>
+          <a href={`/all?q=${encodeURIComponent("smartphone")}`}>
             <h1 className="text-sm text-gray-400 font-bold border-r-2 border-l-2 px-2 border-xiaomi-color">
               See All
             </h1>
