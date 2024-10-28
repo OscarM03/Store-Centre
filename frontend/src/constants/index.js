@@ -18,7 +18,7 @@ import price from '../assets/icons/price.png'
 import quality from '../assets/icons/quality.png'
 import support from '../assets/icons/support.png'
 
-import a3Pro from '../assets/images/a3pro.png'
+import a3Pro from '../assets/images/a3Pro.png'
 import pocoM6Pro1 from '../assets/images/pocoM6Pro1.png'
 import pocoM6Pro3 from '../assets/images/pocoM6Pro3.png'
 import pocoM62 from '../assets/images/pocoM62.png'
