@@ -1,23 +1,25 @@
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import TabletsCard from "../components/TabletsCard";
-import api from "../api";
+import { products } from "../utils";
+// import api from "../api";
 
 const Tablets = () => {
-  const fetchTablets = async () => {
-    const response = await api.get("api/v1/tablets/");
-    return response.data;
-  };
+  const tabletsList = products.filter((product) => product.category === "tablet");
+  // const fetchTablets = async () => {
+  //   const response = await api.get("api/v1/tablets/");
+  //   return response.data;
+  // };
 
-  const {
-    data: tabletsList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["tabletsList"],
-    queryFn: fetchTablets,
-  });
+  // const {
+  //   data: tabletsList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["tabletsList"],
+  //   queryFn: fetchTablets,
+  // });
 
-  if (error) return <p>Error fetching tablets</p>;
+  // if (error) return <p>Error fetching tablets</p>;
 
   return (
     <section className="container">
@@ -31,9 +33,7 @@ const Tablets = () => {
           </a>
         </div>
         <div className="grid grid-cols-3 gap-4 mt-4 max-lg:grid-cols-2 max-md:grid-cols-1">
-          {isLoading ? ( // Check if loading
-            <p>Loading...</p> // Display loading message while items are being loaded
-          ) : (
+          {
             tabletsList.map((item) => (
               <TabletsCard
                 key={item.name}
@@ -47,8 +47,7 @@ const Tablets = () => {
                 current_price={item.current_price}
                 original_price={item.original_price}
               />
-            ))
-          )}
+            ))}
         </div>
       </div>
     </section>

@@ -1,49 +1,72 @@
 import Button from "../components/Button";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useMutation } from "@tanstack/react-query";
-import api from "../api";
 import { WhatsApp } from "../constants";
+import { products } from "../utils";
 
 const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const fetchProduct = async (id) => {
-    const response = await api.get(`api/v1/products/${id}`);
-    return response.data;
-  };
-  const {
-    data: product,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["product", id],
-    queryFn: () => fetchProduct(id),
-    enabled: !!id,
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  const addToCartMutation = useMutation({
-    mutationFn: async (productId) => {
-      const response = await api.post("api/v1/cart/", {
-        product_id: productId,
-      });
-      return response.data;
-    },
-    onError: (error) => {
-      console.error("Error adding product to cart", error);
-    },
-    onSuccess: (data) => {
-      console.log("Total price:", data.total_price);
-      setTimeout(() => {
-        navigate("/mycart");
-      }, 2000);
-    },
-  });
+  const product = products.find((p) => p.id === parseInt(id));
+
+  const handleAddToCart = () => {
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product.id
+    );
+    if (existingProductIndex !== -1) {
+      const newCart = [...cart];
+      newCart[existingProductIndex].quantity += 1;
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    } else {
+      const newCart = [...cart, { ...product, quantity: 1 }];
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    }
+    setTimeout(() => {
+      navigate("/mycart");
+    }, 4000);
+  };
+
+  // const fetchProduct = async (id) => {
+  //   const response = await api.get(`api/v1/products/${id}`);
+  //   return response.data;
+  // };
+  // const {
+  //   data: product,
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["product", id],
+  //   queryFn: () => fetchProduct(id),
+  //   enabled: !!id,
+  // });
+
+  // const addToCartMutation = useMutation({
+  //   mutationFn: async (productId) => {
+  //     const response = await api.post("api/v1/cart/", {
+  //       product_id: productId,
+  //     });
+  //     return response.data;
+  //   },
+  //   onError: (error) => {
+  //     console.error("Error adding product to cart", error);
+  //   },
+  //   onSuccess: (data) => {
+  //     console.log("Total price:", data.total_price);
+  //     setTimeout(() => {
+  //       navigate("/mycart");
+  //     }, 2000);
+  //   },
+  // });
 
   useEffect(() => {
     if (product && product.image) {
@@ -51,18 +74,18 @@ const ProductDetails = () => {
     }
   }, [product]);
 
-  const handleAddToCart = () => {
-    const token = Cookies.get("access_token");
+  // const handleAddToCart = () => {
+  //   const token = Cookies.get("access_token");
 
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-    addToCartMutation.mutate(id);
-  };
+  //   if (!token) {
+  //     navigate("/login");
+  //     return;
+  //   }
+  //   addToCartMutation.mutate(id);
+  // };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Something went wrong</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Something went wrong</div>;
 
   const { features } = product;
   return (

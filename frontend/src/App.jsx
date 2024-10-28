@@ -61,9 +61,7 @@ function App() {
           exact
           path="/mycart"
           element={
-            <ProtectedRoute>
               <MyCart />
-            </ProtectedRoute>
           }
         />
         <Route exact path="/login" element={<Login />} />

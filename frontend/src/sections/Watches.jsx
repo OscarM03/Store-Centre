@@ -1,26 +1,33 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Prev, Next } from "../constants";
-import api from "../api";
-import { useQuery } from "@tanstack/react-query";
+import { products } from "../utils";
+// import api from "../api";
+// import { useQuery } from "@tanstack/react-query";
 
 import ProductCard from "../components/ProductCard";
 
 const Watches = () => {
   const scrollContainerRef = useRef(null);
+  const[watchesList, setWatchesList] = useState([]);
 
-  const fetchWatches = async () => {
-    const response = await api.get("api/v1/watches/");
-    return response.data;
-  };
+  // const fetchWatches = async () => {
+  //   const response = await api.get("api/v1/watches/");
+  //   return response.data;
+  // };
 
-  const {
-    data: watchesList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["watchesList"],
-    queryFn: fetchWatches,
-  });
+  // const {
+  //   data: watchesList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["watchesList"],
+  //   queryFn: fetchWatches,
+  // });
+
+
+  useEffect(() => {
+    setWatchesList(products.filter((product) => product.category === "watch"));
+  }, []);
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -40,7 +47,7 @@ const Watches = () => {
     }
   };
 
-  if (error) return <p>Error fetching watches</p>;
+  // if (error) return <p>Error fetching watches</p>;
 
   return (
     <section className="container">
@@ -51,10 +58,7 @@ const Watches = () => {
             className="flex pt-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
             ref={scrollContainerRef}
           >
-            {isLoading ? ( // Check if loading
-              <p>Loading...</p> // Display loading message while items are being loaded
-            ) : (
-              watchesList.map((product) => (
+            {watchesList.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id}
@@ -62,11 +66,10 @@ const Watches = () => {
                   name={product.name}
                   current_price={product.current_price}
                   original_price={product.original_price}
-                  category={product.category.name}
+                  category={product.category}
                   discount={product.discount}
                 />
-              ))
-            )}
+              ))}
           </div>
           <div
             onClick={scrollLeft}

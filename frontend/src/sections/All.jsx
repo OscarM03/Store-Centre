@@ -1,24 +1,34 @@
 
 import { useState, useEffect } from "react";
-import api from "../api";
+// import api from "../api";
 import { useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../components/ProductCard";
+import { products } from "../utils";
 
 const All = () => {
     const [columns, setColumns] = useState(5);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const location = useLocation();
     const query = new URLSearchParams(location.search).get('q') || '';
 
-    const fetchProductsList = async () => {
-            const response = await api.get('api/v1/products/', { params: { q: query } });
-            return response.data;
-        };
+    // const fetchProductsList = async () => {
+    //         const response = await api.get('api/v1/products/', { params: { q: query } });
+    //         return response.data;
+    //     };
 
-        const { data: productList = [], isLoading, error } = useQuery({
-            queryKey: ['productList'],
-            queryFn: fetchProductsList,
-        });
+    //     const { data: productList = [], isLoading, error } = useQuery({
+    //         queryKey: ['productList'],
+    //         queryFn: fetchProductsList,
+    //     });
+    useEffect(() => {
+        const filtered = products.filter(
+            (product) => 
+                product.name.toLowerCase().includes(query.toLowerCase()) ||
+                product.category.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProducts(filtered);
+    }, [query]);
 
     useEffect(() => {
         const handleResize = () => {
@@ -62,16 +72,13 @@ const All = () => {
         }
     };
 
-    if (error) return <p>Error fetching products</p>;
+    // if (error) return <p>Error fetching products</p>;
 
 
     return (
         <section className="container">
-            {isLoading ? ( // Add loading state check
-        <p>Loading...</p>
-      ) : (
         <div className={`grid ${getGridColumnsClass()} mx-10 max-md:mx-8 max-sm:mx-3 gap-y-8 mt-24`}>
-          {productList.map((product) => (
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               image={product.image}
@@ -84,7 +91,6 @@ const All = () => {
             />
           ))}
         </div>
-      )}
         </section>
     );
 };

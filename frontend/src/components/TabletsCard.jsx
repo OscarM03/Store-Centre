@@ -36,7 +36,7 @@ const TabletsCard = ({
       </div>
       <div className="absolute right-1 top-0">
         {discount && discount > 0 && (
-          <div className="absolute right-1 -top-2">
+          <div className="absolute right-1 top-0">
             <p className="text-xiaomi-color text-sm font-bold">-{discount}%</p>
           </div>
         )}

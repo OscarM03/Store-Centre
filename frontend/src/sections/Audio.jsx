@@ -1,25 +1,31 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Prev, Next } from "../constants";
-import api from "../api";
-import { useQuery } from "@tanstack/react-query";
+import { products } from "../utils";
+// import api from "../api";
+// import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../components/ProductCard";
 
 const Audio = () => {
   const scrollContainerRef = useRef(null);
+  const [audioList, setAudioList] = useState([]);
 
-  const fetchAudios = async () => {
-    const response = await api.get("api/v1/audios/");
-    return response.data;
-  };
+  useEffect(() => {
+    setAudioList(products.filter((product) => product.category === "audio"));
+  }, []);
 
-  const {
-    data: audioList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["audioList"],
-    queryFn: fetchAudios,
-  });
+  // const fetchAudios = async () => {
+  //   const response = await api.get("api/v1/audios/");
+  //   return response.data;
+  // };
+
+  // const {
+  //   data: audioList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["audioList"],
+  //   queryFn: fetchAudios,
+  // });
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -39,7 +45,7 @@ const Audio = () => {
     }
   };
 
-  if (error) return <p>Error fetching Audios</p>;
+  // if (error) return <p>Error fetching Audios</p>;
   return (
     <section className="container">
       <div className="mx-20 relative mt-10 max-md:mx-10 max-sm:mx-3">
@@ -51,9 +57,7 @@ const Audio = () => {
             className="flex pt-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
             ref={scrollContainerRef}
           >
-            {isLoading ? (
-              <p>Loading...</p> // Display loading message when loading
-            ) : (
+            {
               audioList.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -62,11 +66,10 @@ const Audio = () => {
                   name={product.name}
                   current_price={product.current_price}
                   original_price={product.original_price}
-                  category={product.category.name}
+                  category={product.category}
                   discount={product.discount}
                 />
-              ))
-            )}
+              ))}
           </div>
           <div
             onClick={scrollLeft}

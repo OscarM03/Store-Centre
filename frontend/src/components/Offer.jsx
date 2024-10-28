@@ -1,31 +1,32 @@
 import { useEffect, useState, useRef } from "react";
 import Button from "./Button";
-import api from "../api";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import Cookies from "js-cookie";
+// import api from "../api";
+// import { useQuery, useMutation } from "@tanstack/react-query";
+// import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { offerProducts } from "../utils";
 
 const Offer = () => {
   const [timeLeftList, setTimeLeftList] = useState([]);
   const scrollContainerRef = useRef(null);
 
-  const fetchOffers = async () => {
-    const response = await api.get("api/v1/offers/");
-    return response.data;
-  };
-  const {
-    data: offerList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["offerList"],
-    queryFn: fetchOffers,
-  });
+  // const fetchOffers = async () => {
+  //   const response = await api.get("api/v1/offers/");
+  //   return response.data;
+  // };
+  // const {
+  //   data: offerList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["offerList"],
+  //   queryFn: fetchOffers,
+  // });
 
   // Update countdown for each product
   useEffect(() => {
     const updateTimers = () => {
-      const updatedTimeLeft = offerList.map((product) => {
+      const updatedTimeLeft = offerProducts.map((product) => {
         const offerEndDate = new Date(product.enddate);
         const now = new Date();
         const timeDifference = offerEndDate - now;
@@ -49,7 +50,7 @@ const Offer = () => {
     const timerInterval = setInterval(updateTimers, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [offerList]);
+  }, []);
 
   // Auto-scrolling logic
   useEffect(() => {
@@ -96,35 +97,58 @@ const Offer = () => {
   }, []);
 
   const navigate = useNavigate();
-  const addToCartMutation = useMutation({
-    mutationFn: async (productId) => {
-      const response = await api.post("api/v1/cart/", {
-        product_id: productId,
-      });
-      return response.data;
-    },
-    onError: (error) => {
-      console.error("Error adding product to cart", error);
-    },
-    onSuccess: (data) => {
-      console.log("Total price:", data.total_price);
-      setTimeout(() => {
-        navigate("/mycart");
-      }, 2000);
-    },
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  const handleAddToCart = (productId) => {
-    const token = Cookies.get("access_token");
-
-    if (!token) {
-      navigate("/login");
-      return;
+  const handleAddToCart = (product_id, product) => {
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === product_id
+    );
+    if (existingProductIndex !== -1) {
+      const newCart = [...cart];
+      newCart[existingProductIndex].quantity += 1;
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    } else {
+      const newCart = [...cart, { ...product, quantity: 1 }];
+      setCart(newCart);
+      localStorage.setItem("cart", JSON.stringify(newCart));
     }
-    addToCartMutation.mutate(productId);
+    setTimeout(() => {
+      navigate("/mycart");
+    }, 4000);
   };
+  // const addToCartMutation = useMutation({
+  //   mutationFn: async (productId) => {
+  //     const response = await api.post("api/v1/cart/", {
+  //       product_id: productId,
+  //     });
+  //     return response.data;
+  //   },
+  //   onError: (error) => {
+  //     console.error("Error adding product to cart", error);
+  //   },
+  //   onSuccess: (data) => {
+  //     console.log("Total price:", data.total_price);
+  //     setTimeout(() => {
+  //       navigate("/mycart");
+  //     }, 2000);
+  //   },
+  // });
 
-  if (error) return <p>Error fetching offers</p>;
+  // const handleAddToCart = (productId) => {
+  //   const token = Cookies.get("access_token");
+
+  //   if (!token) {
+  //     navigate("/login");
+  //     return;
+  //   }
+  //   addToCartMutation.mutate(productId);
+  // };
+
+  // if (error) return <p>Error fetching offers</p>;
 
   return (
     <section className="container">
@@ -138,10 +162,8 @@ const Offer = () => {
           ref={scrollContainerRef}
           className="flex items-center max-md:gap-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
         >
-          {isLoading ? ( // Check if loading
-            <p>Loading...</p> // Display loading message while items are being loaded
-          ) : (
-            offerList.map((product, index) => (
+          {
+            offerProducts.map((product, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 flex max-lg:flex-col justify-center items-center md:border-r"
@@ -172,7 +194,7 @@ const Offer = () => {
                     </a>
                     <Button
                       label="Order"
-                      onClick={() => handleAddToCart(product.id)}
+                      onClick={() => handleAddToCart(product.id, product)}
                     />
                   </div>
                 </div>
@@ -180,8 +202,7 @@ const Offer = () => {
                   <img src={product.image} alt="Poco X4" width={300} />
                 </div>
               </div>
-            ))
-          )}
+            ))}
         </div>
       </div>
     </section>

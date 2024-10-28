@@ -1,39 +1,49 @@
 import QuantitySelector from "../components/QuantitySelector";
-import { useState } from "react";
-import api from "../api";
+import { useEffect, useState } from "react";
 import { closeIcon } from "../constants";
 import BillingForm from "../components/BillingForm";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const MyCart = () => {
-    const queryClient = useQueryClient();
+
 
     const [selectedShipping, setSelectedShipping] = useState("");
     const [shippingCost, setShippingCost] = useState(0);
+    const [cartItems, setCartItems] = useState([]);
 
-    const {data: cartItems = [], isLoading, error} = useQuery({
-        queryKey: ['cartItems'],
-        queryFn: async () => {
-            const response = await api.get('api/v1/cart/');
-            return response.data;
+    useEffect(() => {
+        const savedCart = localStorage.getItem("cart");
+        if (savedCart) {
+            setCartItems(JSON.parse(savedCart
+            ))
         }
-    })
+    }, []);
 
-    const deleteMutation = useMutation({
-        mutationFn: async (cartItemId) => {
-            await api.delete(`api/v1/cart/delete/${cartItemId}/`);
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries(['cartItems']);
-        },
-        onError: (error) => {
-            console.error('Error deleting the cart item', error);
-        }
-    });
+
+    // const {data: cartItems = [], isLoading, error} = useQuery({
+    //     queryKey: ['cartItems'],
+    //     queryFn: async () => {
+    //         const response = await api.get('api/v1/cart/');
+    //         return response.data;
+    //     }
+    // })
+
+    // const deleteMutation = useMutation({
+    //     mutationFn: async (cartItemId) => {
+    //         await api.delete(`api/v1/cart/delete/${cartItemId}/`);
+    //     },
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries(['cartItems']);
+    //     },
+    //     onError: (error) => {
+    //         console.error('Error deleting the cart item', error);
+    //     }
+    // });
     
 
     const handleDelete = (cartItemId) => {
-        deleteMutation.mutate(cartItemId);
+        const newCart = cartItems.filter(item => item.id !== cartItemId);
+        setCartItems(newCart);
+        localStorage.setItem("cart", JSON.stringify(newCart));
     }
     // useEffect(() => {
     //     const fetchCartItems = async () => {
@@ -80,15 +90,16 @@ const MyCart = () => {
     };
 
     const handleQuantityChange = (productId, newQuantity) => {
-        queryClient.setQueryData(['cartItems'], (oldItems) =>
-            oldItems.map((item) =>
-                item.product.id === productId ? { ...item, quantity: newQuantity } : item
-            )
-        );
+            const updatedCartItems = cartItems.map((item) =>
+                item.id === productId ? { ...item, quantity: newQuantity } : item
+            );
+
+            setCartItems(updatedCartItems);
+            localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     };
 
     const calculateTotal = () => {
-        return cartItems.reduce((total, item) => total + (item.product.current_price * item.quantity), 0);
+        return cartItems.reduce((total, item) => total + (item.current_price * item.quantity), 0);
     };
 
     const total = calculateTotal();
@@ -99,7 +110,6 @@ const MyCart = () => {
         return parseFloat(amount).toLocaleString('en-KE', { style: 'currency', currency: 'KES' });
     };
 
-    if (error) return <p>Error fetching the cart items</p>;
 
     return (
         <section className="container">
@@ -110,30 +120,26 @@ const MyCart = () => {
                             <h1 className="text-xl text-xiaomi-color">My Cart</h1>
                             <p className="text-gray-400 ">{cartItems.length} Products</p>
                         </div>
-                        {isLoading ? ( // Check if loading
-                            <p>Loading...</p> // Display loading message while items are being loaded
-                        ) : (
-                            cartItems.map((item) => (
-                                <div key={item.product.id} className="flex justify-between items-center border border-gray-400 rounded-lg p-3 mt-4 relative">
+                        {cartItems.map((item) => (
+                                <div key={item.id} className="flex justify-between items-center border border-gray-400 rounded-lg p-3 mt-4 relative">
                                     <div>
-                                        <img src={item.product.image} alt="" width={100} />
-                                        <h1 className="text-gray-400 font-semi-bold">{item.product.name}</h1>
+                                        <img src={item.image} alt="" width={100} />
+                                        <h1 className="text-gray-400 font-semi-bold">{item.name}</h1>
                                     </div>
                                     <QuantitySelector 
                                         quantity={item.quantity} 
-                                        onQuantityChange={(newQuantity) => handleQuantityChange(item.product.id, newQuantity)} 
+                                        onQuantityChange={(newQuantity) => handleQuantityChange(item.id, newQuantity)} 
                                     />
                                     <div className="text-center">
-                                        <h1 className="text-xiaomi-color font-bold">{formatCurrency(item.product.current_price)}</h1>
-                                        <h1 className="text-gray-400 font-bold text-sm">{item.product.stock}</h1>
-                                        <h2 className="text-gray-400 font-semibold">Total: {formatCurrency(item.product.current_price * item.quantity)}</h2>
+                                        <h1 className="text-xiaomi-color font-bold">{formatCurrency(item.current_price)}</h1>
+                                        <h1 className="text-gray-400 font-bold text-sm">{item.stock}</h1>
+                                        <h2 className="text-gray-400 font-semibold">Total: {formatCurrency(item.current_price * item.quantity)}</h2>
                                     </div>
                                     <div className="absolute top-2 right-2" onClick={() => handleDelete(item.id)}>
                                         <img src={closeIcon} alt="close icon" width={10} />
                                     </div>
                                 </div>
-                            ))
-                        )}
+                            ))}
 
                     </div>
                     <div className="w-[40vw] max-lg:w-full mt-[45px rounded-lg">

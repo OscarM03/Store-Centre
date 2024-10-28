@@ -1,19 +1,24 @@
-
+import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import api from "../api";
+import { products } from "../utils";
+// import { useQuery } from "@tanstack/react-query";
+// import api from "../api";
 
 const Accessories = () => {
+  const [accessoriesList, setAccessoriesList] = useState([]);
 
-  const fetchAccessories = async () => {
-    const response = await api.get('api/v1/accessories/')
-    return response.data
-  }
+  useEffect(() => {
+    setAccessoriesList(products.filter((product) => product.category === "accessory"));
+  }, []);
+  // const fetchAccessories = async () => {
+  //   const response = await api.get('api/v1/accessories/')
+  //   return response.data
+  // }
 
-  const {data: accessoriesList = [], isLoading, error} = useQuery({
-    queryKey: ['accessoriesList'],
-    queryFn: fetchAccessories,
-    })
+  // const {data: accessoriesList = [], isLoading, error} = useQuery({
+  //   queryKey: ['accessoriesList'],
+  //   queryFn: fetchAccessories,
+  //   })
 
 
   // const scrollContainerRef = useRef(null);
@@ -36,7 +41,7 @@ const Accessories = () => {
   //   }
   // };
 
-  if (error) return <p>Error fetching accessories</p>;
+  // if (error) return <p>Error fetching accessories</p>;
   
   return (
     <section className="container">
@@ -47,9 +52,7 @@ const Accessories = () => {
                     {/* <h1 className="text-sm text-gray-400 font-bold border-r-2 border-l-2 px-2 border-xiaomi-color">See All</h1> */}
                 </div>
                 <div className="grid grid-cols-6 gap-6 mt-2 max-lg:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2">
-                {isLoading ? (
-            <p>Loading...</p>
-          ) : (
+                {
             accessoriesList.map((product) => (
               <ProductCard 
                 key={product.id}
@@ -58,11 +61,10 @@ const Accessories = () => {
                 name={product.name}
                 current_price={product.current_price}
                 original_price={product.original_price}
-                category={product.category.name}
+                category={product.category}
                 discount={product.discount}
               />
-            ))
-          )}
+            ))}
                 </div>
             </div>
         </section>

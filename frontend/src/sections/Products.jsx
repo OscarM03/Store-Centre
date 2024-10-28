@@ -2,22 +2,23 @@ import { useRef } from "react";
 import { Prev, Next } from "../constants";
 
 import ProductCard from "../components/ProductCard";
-import api from "../api";
-import { useQuery,} from "@tanstack/react-query";
+import { products } from "../utils";
+// import api from "../api";
+// import { useQuery,} from "@tanstack/react-query";
 
 const Products = () => {
 
   const scrollContainerRef = useRef(null);
   
-  const fetchProducts = async () => {
-    const response = await api.get('api/v1/products/');
-    return response.data;
-};
+//   const fetchProducts = async () => {
+//     const response = await api.get('api/v1/products/');
+//     return response.data;
+// };
 
-const { data: productList = [], isLoading, error } = useQuery({
-    queryKey: ['productList'],
-    queryFn: fetchProducts,
-});
+// const { data: productList = [], isLoading, error } = useQuery({
+//     queryKey: ['productList'],
+//     queryFn: fetchProducts,
+// });
 
 
   const scrollLeft = () => {
@@ -38,7 +39,7 @@ const { data: productList = [], isLoading, error } = useQuery({
     }
   };
 
-  if (error) return <p>Error fetching products</p>;
+  // if (error) return <p>Error fetching products</p>;
 
   return (
     <section className="container">
@@ -51,10 +52,7 @@ const { data: productList = [], isLoading, error } = useQuery({
             className="flex pt-10 overflow-x-scroll scrollbar-hide whitespace-nowrap"
             ref={scrollContainerRef}
           >
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              productList.map((product) => (
+            {products.map((product) => (
                 <ProductCard
                   key={product.id}
                   id={product.id}
@@ -62,11 +60,10 @@ const { data: productList = [], isLoading, error } = useQuery({
                   name={product.name}
                   current_price={product.current_price}
                   original_price={product.original_price}
-                  category={product.category.name}
+                  category={product.category}
                   discount={product.discount}
                 />
-              ))
-            )}
+              ))}
           </div>
           <div
             onClick={scrollLeft}

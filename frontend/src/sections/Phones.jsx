@@ -1,23 +1,29 @@
 import ProductCard from "../components/ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import api from "../api";
+import { useEffect, useState } from "react";
+import { products } from "../utils";
+// import { useQuery } from "@tanstack/react-query";
+// import api from "../api";
 
 const Phones = () => {
-  const fetchPhones = async () => {
-    const response = await api.get("api/v1/phones/");
-    return response.data;
-  };
+  const[phonesList, setPhonesList] = useState([]);
+  // const fetchPhones = async () => {
+  //   const response = await api.get("api/v1/phones/");
+  //   return response.data;
+  // };
 
-  const {
-    data: phonesList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["phonesList"],
-    queryFn: fetchPhones,
-  });
+  // const {
+  //   data: phonesList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["phonesList"],
+  //   queryFn: fetchPhones,
+  // });
 
-  if (error) return <p>Error fetching phones</p>;
+  // if (error) return <p>Error fetching phones</p>;
+  useEffect(() => {
+    setPhonesList(products.filter((product) => product.category === "smartphone"));
+  }, []);
 
   return (
     <section className="container">
@@ -31,10 +37,7 @@ const Phones = () => {
           </a>
         </div>
         <div className="grid grid-cols-6 mt-2 max-lg:grid-cols-4 gap-4 max-md:grid-cols-3 max-sm:grid-cols-2">
-          {isLoading ? ( // Check if loading
-            <p>Loading...</p> // Display loading message while items are being loaded
-          ) : (
-            phonesList.map((product) => (
+          {phonesList.map((product) => (
               <ProductCard
                 key={product.id}
                 id={product.id}
@@ -42,11 +45,10 @@ const Phones = () => {
                 name={product.name}
                 current_price={product.current_price}
                 original_price={product.original_price}
-                category={product.category.name}
+                category={product.category}
                 discount={product.discount}
               />
-            ))
-          )}
+            ))}
         </div>
       </div>
     </section>

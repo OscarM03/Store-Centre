@@ -1,24 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
-import api from "../api";
+// import { useQuery } from "@tanstack/react-query";
+// import api from "../api";
+import { products } from "../utils";
 
 const Screens = () => {
-  const fetchScreens = async () => {
-    const response = await api.get("api/v1/screens/");
-    return response.data;
-  };
+  const screenList = products.filter((product) => product.category === "screen");
+  // const fetchScreens = async () => {
+  //   const response = await api.get("api/v1/screens/");
+  //   return response.data;
+  // };
 
-  const {
-    data: screenList = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["screenList"],
-    queryFn: fetchScreens,
-  });
+  // const {
+  //   data: screenList = [],
+  //   isLoading,
+  //   error,
+  // } = useQuery({
+  //   queryKey: ["screenList"],
+  //   queryFn: fetchScreens,
+  // });
 
-  console.log(screenList);
+  // console.log(screenList);
 
-  if (error) return <p>Error fetching screens</p>;
+  // if (error) return <p>Error fetching screens</p>;
 
   return (
     <section className="container">
@@ -32,9 +34,7 @@ const Screens = () => {
           </a>
         </div>
         <div className="grid grid-cols-4  md:gap-8 mt-4 max-lg:grid-cols-2 max-sm:grid-cols-1 ">
-          {isLoading ? ( // Check if loading
-            <p>Loading...</p> // Display loading message while items are being loaded
-          ) : (
+          {
             screenList.map((screen) => (
               <div
                 key={screen.id}
@@ -68,8 +68,7 @@ const Screens = () => {
                   </p>
                 </div>
               </div>
-            ))
-          )}
+            ))}
         </div>
       </div>
     </section>

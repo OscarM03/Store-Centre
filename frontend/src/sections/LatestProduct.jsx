@@ -1,22 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
-import api from "../api";
+// import { useQuery } from "@tanstack/react-query";
+// import api from "../api";
 import { Storage } from "../constants";
+import { latestProduct } from "../utils";
 
 const LatestProduct = () => {
 
-  const fetchLatestPhone = async () => {
-    const response = await api.get("api/v1/latestphone/");
-    return response.data;
-}
-const {data: latestPhones = [], isLoading, error} = useQuery ({
-    queryKey: ['latestPhones'],
-    queryFn: fetchLatestPhone
-})
+//   const fetchLatestPhone = async () => {
+//     const response = await api.get("api/v1/latestphone/");
+//     return response.data;
+// }
+// const {data: latestPhones = [], isLoading, error} = useQuery ({
+//     queryKey: ['latestPhones'],
+//     queryFn: fetchLatestPhone
+// })
 
-  const product = latestPhones[0] || {};
+  const product = latestProduct[0] || {};
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching latest phone</p>;
+//   if (isLoading) return <p>Loading...</p>;
+//   if (error) return <p>Error fetching latest phone</p>;
   return (
     <section className="container bg-gradient-bg bg-center max-md:bg-cover bg-no-repeat py-10">
       <div className="text-center mt-10 max-md:mx-3">
